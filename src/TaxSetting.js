@@ -45,7 +45,8 @@ class TaxSetting extends Component {
                       className="input-group__control"
                       placeholder="00"
                       value={tax.state.rate}
-                      onChange={tax.handleRateChange} />
+                      onChange={tax.handleRateChange}
+                    />
                     <span className="input-group__addon">%</span>
                   </div>
                 </div>

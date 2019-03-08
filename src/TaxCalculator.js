@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import numeral from "numeral";
-import "numeral/locales/ja";
 import classNames from "classnames";
 import DefaultSetting from './constants/DefaultSetting';
 import store from 'store';
@@ -9,9 +8,23 @@ import { Provider, Subscribe, Container } from 'unstated';
 import TaxContainer   from './TaxContainer';
 
 class TaxCalculator extends Component {
-  //constructor(props) {
-  //  super(props);
-  //}
+  constructor(props) {
+    super(props);
+    this.state = {
+      price: 0
+    }
+  }
+
+  shouldComponentUpdate = (nextProps, nextState) => {
+    console.log("fa")
+    return true
+  }
+
+  handlePriceChange = (e) => {
+    this.setState({
+      price: e.target.value
+    })
+  }
 
   handleResultClick = (e) => {
     e.target.select()
@@ -54,9 +67,9 @@ class TaxCalculator extends Component {
                   pattern="[0-9]*"
                   className="input-group__control"
                   placeholder="計算する金額"
-                  value={tax.state.price}
+                  value={this.state.price}
                   name="price"
-                  onChange={tax.handlePriceChange}
+                  onChange={this.handlePriceChange}
                 />
                 <button
                   type="button"
@@ -72,11 +85,9 @@ class TaxCalculator extends Component {
                       type="text"
                       readOnly={true}
                       className="input-group__control"
-                      value={
-                        this.calcPrice(tax.state.price, tax.state.rate, 
-                                       tax.state.rule, tax.state.format, true)
-                      }
-                      onClick={this.handleResultClick} />
+                      value={tax.state.resultIncludeTax}
+                      onClick={this.handleResultClick}
+                    />
                     <span className="input-group__addon">税込</span>
                   </div>
                   <div className="input-group input-group--lg">
@@ -85,11 +96,9 @@ class TaxCalculator extends Component {
                       type="text"
                       readOnly={true}
                       className="input-group__control"
-                      value={
-                        this.calcPrice(tax.state.price, tax.state.rate, 
-                                       tax.state.rule, tax.state.format, false)
-                      }
-                      onClick={this.handleResultClick} />
+                      value={tax.state.resultExcludeTax}
+                      onClick={this.handleResultClick}
+                    />
                     <span className="input-group__addon">税抜</span>
                   </div>
                 </div>
