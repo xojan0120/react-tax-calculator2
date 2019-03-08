@@ -170,7 +170,6 @@ class App extends Component {
           </Tabs>
         </div>
 
-
       </div>
     );
   }
