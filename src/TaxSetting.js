@@ -1,21 +1,12 @@
 import React, { Component } from 'react';
-import Select from 'react-select';
-import DefaultSetting from "./constants/DefaultSetting";
-import store from 'store';
-import { Provider, Subscribe } from 'unstated';
-import TaxContainer   from './TaxContainer';
+import Select               from 'react-select';
 
 class TaxSetting extends Component {
   //constructor(props) {
   //  super(props);
   //}
 
-  //handleClearClick = (e) => {
-  //  e.preventDefault()
-  //}
-
   render() {
-
     const ruleOptions = [
       {value: "floor", label: "切り捨て"},
       {value: "ceil",  label: "切り上げ"},
@@ -29,61 +20,53 @@ class TaxSetting extends Component {
     ]
 
     return (
-      <Provider>
-        <Subscribe to={[TaxContainer]}>
-          {tax => (
+      <div className="tax-setting">
 
-            <div className="tax-setting">
-
-              <div className="tax-setting__row">
-                <div className="tax-setting__col">
-                  <div className="input-group">
-                    <span className="input-group__addon">税率</span>
-                    <input
-                      type="number"
-                      pattern="[0-9]*"
-                      className="input-group__control"
-                      placeholder="00"
-                      value={tax.state.rate}
-                      onChange={tax.handleRateChange}
-                    />
-                    <span className="input-group__addon">%</span>
-                  </div>
-                </div>
-
-                <div className="tax-setting__col">
-                  <div className="input-group">
-                    <span className="input-group__addon">計算方法</span>
-                    <Select
-                      value={tax.state.rule}
-                      className="input-group__control"
-                      clearable={false}
-                      searchable={false}
-                      options={ruleOptions}
-                      onChange={tax.handleRuleChange} />
-                  </div>
-                </div>
-
-                <div className="tax-setting__col">
-                  <div className="input-group">
-                    <span className="input-group__addon">表記</span>
-                    <Select
-                      value={tax.state.format}
-                      className="input-group__control"
-                      clearable={false}
-                      searchable={false}
-                      options={formatOptions}
-                      onChange={tax.handleFormatChange} />
-                  </div>
-                </div>
-              </div>
-
-              <button type="button" className="tax-setting__clear" onClick={tax.handleClearClick}>設定を初期化</button>
+        <div className="tax-setting__row">
+          <div className="tax-setting__col">
+            <div className="input-group">
+              <span className="input-group__addon">税率</span>
+              <input
+                type="number"
+                pattern="[0-9]*"
+                className="input-group__control"
+                placeholder="00"
+                value={this.props.rate}
+                onChange={this.props.onRateChange}
+              />
+              <span className="input-group__addon">%</span>
             </div>
+          </div>
 
-          )}
-        </Subscribe>
-      </Provider>
+          <div className="tax-setting__col">
+            <div className="input-group">
+              <span className="input-group__addon">計算方法</span>
+              <Select
+                value={this.props.rule}
+                className="input-group__control"
+                clearable={false}
+                searchable={false}
+                options={ruleOptions}
+                onChange={this.props.onRuleChange} />
+            </div>
+          </div>
+
+          <div className="tax-setting__col">
+            <div className="input-group">
+              <span className="input-group__addon">表記</span>
+              <Select
+                value={this.props.format}
+                className="input-group__control"
+                clearable={false}
+                searchable={false}
+                options={formatOptions}
+                onChange={this.props.onFormatChange} />
+            </div>
+          </div>
+        </div>
+
+        <button type="button" className="tax-setting__clear" onClick={this.props.onSettingClear}>設定を初期化</button>
+      </div>
     );
   }
 }
